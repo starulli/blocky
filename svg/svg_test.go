@@ -7,15 +7,6 @@ import (
 	"testing"
 )
 
-func TestSvgStringerOutput(t *testing.T) {
-	s := svg{}
-	got := s.String()
-	want := "<svg></svg>"
-	if got != want {
-		t.Errorf("Got %v, want %v", got, want)
-	}
-}
-
 func TestLoadImage(t *testing.T) {
 	m, _ := loadImage(imageReader())
 	width, height := 9, 9
@@ -31,6 +22,15 @@ func TestLoadImage(t *testing.T) {
 	m, err := loadImage(badImageReader())
 	if err == nil {
 		t.Errorf("Expected error for bad image")
+	}
+}
+
+func TestSvgStringerOutput(t *testing.T) {
+	m, _ := loadImage(imageReader())
+	s := svg{m: m}
+	got := s.String()
+	if got != svgOutput {
+		t.Errorf("Got %v, want %v", got, svgOutput)
 	}
 }
 
@@ -50,3 +50,8 @@ iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAL
 EwAACxMBAJqcGAAAAAxQTFRF4Ts7O57hmzvhAAAAgavRowAAAAR0Uk5T////AEAqqfQAAAAiSURB
 VHicYxANZWBwaHBgKGh2YKjpd2DIWgWhQXyQOFAeAKXYCSUY0KxtAAAAAElFTkSuQmCC
 `
+
+var svgOutput = strings.TrimSpace(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9">
+</svg>
+`)

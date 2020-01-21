@@ -7,6 +7,7 @@ import (
 	"image"
 	"io"
 	"os"
+	"strings"
 
 	_ "image/png"
 )
@@ -48,5 +49,9 @@ type svg struct {
 }
 
 func (s svg) String() string {
-	return "<svg></svg>"
+	var b strings.Builder
+	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">`,
+		s.m.Bounds().Max.X, s.m.Bounds().Max.Y)
+	fmt.Fprintf(&b, "\n</svg>")
+	return b.String()
 }
