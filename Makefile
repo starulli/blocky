@@ -8,7 +8,12 @@ SHELL := bash
 .ONESHELL:
 
 
-## External target definitions
+## Recipe parameters
+
+SPEC ?= ./...
+
+
+## External recipe definitions
 
 run: build
 	./blocky
@@ -16,3 +21,7 @@ run: build
 build:
 	go build
 .PHONY: build
+
+test:
+	go test $(SPEC)
+.PHONY: test
