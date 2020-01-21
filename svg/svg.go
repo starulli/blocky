@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"github.com/tinychameleon/blocky/shape"
 
 	_ "image/png"
 )
@@ -48,10 +49,28 @@ type svg struct {
 	m image.Image
 }
 
+func (s svg) convert() []shape.Interface {
+	var sh []shape.Interface
+	for y := 0; y < s.m.Bounds().Max.Y; y++ {
+		for x := 0; x < s.m.Bounds().Max.X; x++ {
+			sh = append(sh, shape.Pixel(x, y, s.m.At(x, y)))
+		}
+	}
+	return sh
+}
+
 func (s svg) String() string {
 	var b strings.Builder
-	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">`,
+
+	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" `)
+	fmt.Fprintf(&b, `viewBox="0 0 %d %d">`,
 		s.m.Bounds().Max.X, s.m.Bounds().Max.Y)
-	fmt.Fprintf(&b, "\n</svg>")
+
+	fmt.Fprintln(&b)
+	for _, sh := range s.convert() {
+		fmt.Fprintln(&b, sh)
+	}
+
+	fmt.Fprintf(&b, "</svg>")
 	return b.String()
 }

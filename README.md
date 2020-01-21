@@ -1,6 +1,13 @@
 # Blocky
 Converts pixel art image files into SVGs for the web.
 
+## Usage
+Basic usage is simple; all output is written to `stdout`, so just redirect
+it to save the SVG:
+```
+$ blocky image.png > image.svg
+```
+
 ## Development
 Requires Go 1.13 to build and has no external dependencies.
 
