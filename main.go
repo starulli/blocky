@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	flag.Usage = usage
 	debug := flag.Bool("debug", false, "Enable debug mode")
 	flag.Parse()
 
@@ -23,4 +24,9 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(s)
+}
+
+func usage() {
+	fmt.Printf("Usage: %s [-debug] FILE\n\nFlags:\n", os.Args[0])
+	flag.PrintDefaults()
 }
