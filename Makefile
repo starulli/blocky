@@ -25,3 +25,11 @@ build:
 test:
 	go test $(SPEC)
 .PHONY: test
+
+sizes: build
+	./blocky image.png > image_pfp.svg
+	gzip -c9 image_pfp.svg > image_pfp.svg.gz
+	du -b image*
+	rm image_*
+.PHONY: sizes
+.SILENT: sizes
