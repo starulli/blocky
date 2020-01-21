@@ -2,10 +2,22 @@
 Converts pixel art image files into SVGs for the web.
 
 ## Usage
-Basic usage of `blocky` is simple; all output is written to `stdout` and can
-be saved by redirecting:
+Using `blocky` is pretty simple:
 ```
-$ blocky image.png > image.svg
+$ blocky [-debug] FILE
+```
+All output is written to `stdout`, so you may redirect it to save output.
+
+The flags `blocky` accepts mean the following:
+
+| Flag     | Default | Explanation               |
+| -------- | ------- | ------------------------- |
+| `-debug` | Off     | Enables debug mode output |
+
+### Example
+To run in debug mode, while converting `artwork.png` into `logo.svg`:
+```
+$ blocky -debug artwork.png > logo.svg
 ```
 
 ## Development
@@ -19,6 +31,14 @@ $ make test
 Set the `SPEC` variable to target a specific package during testing:
 ```
 $ make test SPEC=./svg
+```
+
+### Debug Mode
+When the `-debug` flag is passed, the resulting SVG will have stroke styling
+embedded into it so that the rectangle outputs can be distinguished:
+```
+$ make build
+$ ./blocky -debug image.png > image.svg
 ```
 
 ## SVG Resouce Sizes

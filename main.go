@@ -9,9 +9,15 @@ import (
 )
 
 func main() {
+	debug := flag.Bool("debug", false, "Enable debug mode")
 	flag.Parse()
 
-	s, err := svg.New(flag.Arg(0))
+	var options []svg.Option
+	if *debug {
+		options = append(options, svg.DebugMode)
+	}
+
+	s, err := svg.New(flag.Arg(0), options...)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Bad input file:", err)
 		os.Exit(1)

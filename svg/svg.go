@@ -15,7 +15,7 @@ import (
 
 // New creates an instance of svg.Interface to convert an image
 // into an SVG file.
-func New(srcFilePath string) (Interface, error) {
+func New(srcFilePath string, options ...Option) (Interface, error) {
 	file, err := os.Open(srcFilePath)
 	if err != nil {
 		return nil, svgError(err)
@@ -27,7 +27,11 @@ func New(srcFilePath string) (Interface, error) {
 		return nil, svgError(err)
 	}
 
-	return svg{m: m}, nil
+	s := svg{m: m}
+	for _, opt := range options {
+		opt(&s)
+	}
+	return s, nil
 }
 
 func loadImage(r io.Reader) (image.Image, error) {
@@ -47,6 +51,7 @@ type Interface interface {
 
 type svg struct {
 	m image.Image
+	debug bool
 }
 
 func (s svg) convert() []shape.Interface {
@@ -65,6 +70,11 @@ func (s svg) String() string {
 	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" `)
 	fmt.Fprintf(&b, `viewBox="0 0 %d %d">`,
 		s.m.Bounds().Max.X, s.m.Bounds().Max.Y)
+
+	if s.debug {
+		fmt.Fprintln(&b,
+			"<style>rect { stroke-width: 0.01; stroke: #000 }</style>")
+	}
 
 	fmt.Fprintln(&b)
 	for _, sh := range s.convert() {
