@@ -2,17 +2,17 @@
 Converts pixel art image files into SVGs for the web.
 
 ## Usage
-Using `blocky` is pretty simple:
+Using `blocky` is pretty simple: you give it a PNG file and it writes the SVG
+data to standard output.
 ```
-$ blocky [-debug] FILE
+$ blocky [-debug] [-keepInvisible] FILE
 ```
-All output is written to `stdout`, so you may redirect it to save output.
-
 The flags `blocky` accepts mean the following:
 
-| Flag     | Default | Explanation               |
-| -------- | ------- | ------------------------- |
-| `-debug` | Off     | Enables debug mode output |
+| Flag             | Default | Explanation                                  |
+| ---------------- | ------- | -------------------------------------------- |
+| `-debug`         | Off     | Enables debug mode output                    |
+| `-keepInvisible` | Off     | Write elements that have `0x00` alpha values |
 
 ### Example
 To run in debug mode, while converting `artwork.png` into `logo.svg`:

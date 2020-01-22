@@ -52,6 +52,7 @@ type Interface interface {
 type svg struct {
 	m image.Image
 	debug bool
+	keepInvisible bool
 }
 
 func (s svg) convert() []shape.Interface {
@@ -78,6 +79,9 @@ func (s svg) String() string {
 
 	fmt.Fprintln(&b)
 	for _, sh := range s.convert() {
+		if !s.keepInvisible && sh.Invisible() {
+			continue
+		}
 		fmt.Fprintln(&b, sh)
 	}
 

@@ -14,6 +14,11 @@ type pixel struct {
 	c color.Color
 }
 
+func (p pixel) Invisible() bool {
+	_, _, _, a := p.c.RGBA()
+	return a == 0
+}
+
 func (p pixel) String() string {
 	o := opacity(p.c)
 	attr := ""

@@ -11,12 +11,12 @@ SHELL := bash
 ## Recipe parameters
 
 SPEC ?= ./...
-
+FLAGS ?= -debug
 
 ## External recipe definitions
 
 run: build
-	./blocky
+	./blocky $(FLAGS) image.png > image.svg
 
 build:
 	go build

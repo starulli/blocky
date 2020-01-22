@@ -11,14 +11,12 @@ import (
 func main() {
 	flag.Usage = usage
 	debug := flag.Bool("debug", false, "Enable debug mode")
+	keep := flag.Bool("keepInvisible", false,
+		"Output elements that have 0x00 alpha values")
 	flag.Parse()
 
-	var options []svg.Option
-	if *debug {
-		options = append(options, svg.DebugMode)
-	}
-
-	s, err := svg.New(flag.Arg(0), options...)
+	s, err := svg.New(flag.Arg(0), svg.DebugMode(*debug),
+		svg.KeepInvisible(*keep))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Bad input file:", err)
 		os.Exit(1)
