@@ -1,15 +1,19 @@
 package svg
 
+import "image/color"
+
 type Option func(*svg)
 
-func DebugMode(on bool) Option {
-	return func(s *svg) {
-		s.debug = on
-	}
+func DebugMode(s *svg){
+	s.debug = true
 }
 
-func KeepInvisible(on bool) Option {
+func KeepInvisible(s *svg) {
+	s.keepInvisible = true
+}
+
+func Exclude(c color.RGBA) Option {
 	return func(s *svg) {
-		s.keepInvisible = on
+		s.exclude = &c
 	}
 }

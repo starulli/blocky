@@ -2,6 +2,7 @@
 package shape
 
 import (
+	"errors"
 	"fmt"
 	"image/color"
 )
@@ -10,6 +11,25 @@ import (
 type Interface interface {
 	fmt.Stringer
 	Invisible() bool
+	RGBA() color.RGBA
+}
+
+// BadHex represents a bad RGBA hex code string.
+var BadHex = errors.New("Bad hex code")
+
+// ParseHex converts an RGBA hex colour code with optional alpha into
+// an instance of color.RGBA.
+func ParseHex(s string) (color.RGBA, error) {
+	var r, g, b, a uint8
+	n, err := fmt.Sscanf(s, "#%02x%02x%02x%02x", &r, &g, &b, &a)
+	if n == 3 {
+		err = nil
+		a = 0xff
+	}
+	if err != nil {
+		return color.RGBA{}, BadHex
+	}
+	return color.RGBA{r, g, b, a}, nil
 }
 
 func hex(clr color.Color) string {

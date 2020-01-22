@@ -5,6 +5,7 @@ package svg
 import (
 	"fmt"
 	"image"
+	"image/color"
 	"io"
 	"os"
 	"strings"
@@ -53,6 +54,7 @@ type svg struct {
 	m image.Image
 	debug bool
 	keepInvisible bool
+	exclude *color.RGBA
 }
 
 func (s svg) convert() []shape.Interface {
@@ -79,7 +81,7 @@ func (s svg) String() string {
 
 	fmt.Fprintln(&b)
 	for _, sh := range s.convert() {
-		if !s.keepInvisible && sh.Invisible() {
+		if !s.keepInvisible && sh.Invisible() || s.exclude != nil && *s.exclude == sh.RGBA() {
 			continue
 		}
 		fmt.Fprintln(&b, sh)

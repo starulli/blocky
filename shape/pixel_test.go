@@ -27,3 +27,12 @@ func TestPixel(t *testing.T) {
 		}
 	}
 }
+
+func TestPixelColor(t *testing.T) {
+	want := color.RGBA{1, 2, 3, 255}
+	p := Pixel(1, 2, color.NRGBA{1, 2, 3, 255})
+	got := p.RGBA()
+	if got != want {
+		t.Errorf("Got %v, want %v", got, want)
+	}
+}

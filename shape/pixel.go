@@ -19,6 +19,10 @@ func (p pixel) Invisible() bool {
 	return a == 0
 }
 
+func (p pixel) RGBA() color.RGBA {
+	return color.RGBAModel.Convert(p.c).(color.RGBA)
+}
+
 func (p pixel) String() string {
 	o := opacity(p.c)
 	attr := ""

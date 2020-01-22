@@ -9,10 +9,11 @@ $ blocky [-debug] [-keepInvisible] FILE
 ```
 The flags `blocky` accepts mean the following:
 
-| Flag             | Default | Explanation                                  |
-| ---------------- | ------- | -------------------------------------------- |
-| `-debug`         | Off     | Enables debug mode output                    |
-| `-keepInvisible` | Off     | Write elements that have `0x00` alpha values |
+| Flag                   | Default | Explanation                                  |
+| ---------------------- | ------- | -------------------------------------------- |
+| `-debug`               | Off     | Enables debug mode output                    |
+| `-keepInvisible`       | Off     | Write elements that have `0x00` alpha values |
+| `-exclude=#RRGGBB[AA]` | Off     | Excludes the given colour from output. Alpha is `0xFF` when unspecified. |
 
 ### Example
 To run in debug mode, while converting `artwork.png` into `logo.svg`:
