@@ -47,11 +47,12 @@ This tool was created to turn pixel art PNG files into SVGs for website use, so
 it's important to keep track of how the generated SVG elements will affect page
 sizes.
 
-The test case is a `165B`, `9x9` PNG file; these numbers will most likely differ
+The test case is a `455B`, `25x20` PNG file; these numbers will most likely differ
 based on PNG file, but it should still be a decent ballpark.
 
-| Version | Description             | Size (B) |  ΔSize | GZ (B) |  ΔGZ | ~Ratio (%) |
-| ------- | ----------------------- | -------: | -----: | -----: | ---: | ---------: |
-| v0.1    | pixel-for-pixel output  |    4,806 |      – |    420 |    – | 11:1 (91%) |
+| Version | Description              | Size (B) |  ΔSize | GZ (B) |  ΔGZ | ~Ratio (%) |
+| ------- | ------------------------ | -------: | -----: | -----: | ---: | ---------: |
+| v0.1    | Pixel-for-pixel output   |   33,412 |      – |  1,646 |    – | 20:1 (95%) |
+| v0.2    | Alpha & colour exclusion |   12,487 |   ↓63% |    831 | ↓49% | 15:1 (93%) |
 
-Currently, the generated SVG is `2.5x` larger than the source image.
+Currently, the generated SVG is `1.8x` larger than the source image.
