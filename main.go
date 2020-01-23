@@ -57,7 +57,12 @@ func fromFlags(flags cmdFlags) []svg.Option {
 		o = append(o, svg.Exclude(c))
 	}
 
-	o = append(o, svg.Strategy(strategy.Pixels))
+	f := strategy.Pixels
+	if flags.strategy == "rects" {
+		f = strategy.Rects
+	}
+	o = append(o, svg.Strategy(f))
+
 	return o
 }
 
@@ -67,7 +72,7 @@ func exit(args ...interface{}) {
 }
 
 func usage() {
-	fmt.Println("Usage: %s [-debug] [-keepInvisible] [-exclude=#RRGGBB[AA]] [-optimize=pixels] FILE",
+	fmt.Printf("Usage: %s [-debug] [-keepInvisible] [-exclude=#RRGGBB[AA]] [-optimize=pixels|rects] FILE\n",
 		os.Args[0])
 	flag.PrintDefaults()
 }

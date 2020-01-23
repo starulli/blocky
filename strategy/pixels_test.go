@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestPixelForPixel(t *testing.T) {
+func TestPixels(t *testing.T) {
 	g := grid.New(testdata.Image())
 	got := Pixels(g)
 	if len(got) != len(pixels) {

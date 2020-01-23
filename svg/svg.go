@@ -76,13 +76,13 @@ func (s svg) String() string {
 	width, height := s.g.Bounds()
 	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">`,
 		width, height)
+	fmt.Fprintf(&b, "\n")
 
 	if s.debug {
 		fmt.Fprintln(&b,
 			"<style>rect { stroke-width: 0.01; stroke: #000 }</style>")
 	}
 
-	fmt.Fprintln(&b)
 	for _, sh := range s.strategy(s.g) {
 		fmt.Fprintln(&b, sh)
 	}
