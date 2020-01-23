@@ -4,12 +4,12 @@ package svg
 
 import (
 	"fmt"
+	"github.com/tinychameleon/blocky/strategy"
 	"image"
 	"image/color"
 	"io"
 	"os"
 	"strings"
-	"github.com/tinychameleon/blocky/shape"
 
 	_ "image/png"
 )
@@ -51,20 +51,11 @@ type Interface interface {
 }
 
 type svg struct {
-	m image.Image
-	debug bool
+	m             image.Image
+	debug         bool
 	keepInvisible bool
-	exclude *color.RGBA
-}
-
-func (s svg) convert() []shape.Interface {
-	var sh []shape.Interface
-	for y := 0; y < s.m.Bounds().Max.Y; y++ {
-		for x := 0; x < s.m.Bounds().Max.X; x++ {
-			sh = append(sh, shape.Pixel(x, y, s.m.At(x, y)))
-		}
-	}
-	return sh
+	exclude       *color.RGBA
+	strategy      strategy.Func
 }
 
 func (s svg) String() string {
@@ -80,7 +71,7 @@ func (s svg) String() string {
 	}
 
 	fmt.Fprintln(&b)
-	for _, sh := range s.convert() {
+	for _, sh := range s.strategy(s.m) {
 		if !s.keepInvisible && sh.Invisible() || s.exclude != nil && *s.exclude == sh.RGBA() {
 			continue
 		}

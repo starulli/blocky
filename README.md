@@ -14,6 +14,15 @@ The flags `blocky` accepts mean the following:
 | `-debug`               | Off     | Enables debug mode output                    |
 | `-keepInvisible`       | Off     | Write elements that have `0x00` alpha values |
 | `-exclude=#RRGGBB[AA]` | Off     | Excludes the given colour from output. Alpha is `0xFF` when unspecified. |
+| `-optimize`            | Off     | Optimize rectangles in the SVG               |
+
+### Optimize Flag Values
+The optimize flag supports the following modes:
+
+| Mode     | Description                                 |
+| -------- | ------------------------------------------- |
+| Off      | No optimization. Defaults to `pixels`       |
+| `pixels` | Emits individual pixels                     |
 
 ### Example
 To run in debug mode, while converting `artwork.png` into `logo.svg`:

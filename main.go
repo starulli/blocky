@@ -6,13 +6,15 @@ import (
 	"os"
 
 	"github.com/tinychameleon/blocky/shape"
+	"github.com/tinychameleon/blocky/strategy"
 	"github.com/tinychameleon/blocky/svg"
 )
 
 type cmdFlags struct {
-	debug bool
-	keep bool
-	exclude string
+	debug    bool
+	keep     bool
+	exclude  string
+	strategy string
 }
 
 func main() {
@@ -22,6 +24,8 @@ func main() {
 		"Output elements that have 0x00 alpha values")
 	flag.StringVar(&flags.exclude, "exclude", "",
 		"Exclude #RRGGBB[AA] colour from output")
+	flag.StringVar(&flags.strategy, "optimize", "pixels",
+		"Optimize SVG rectangle output. Values: pixels")
 	flag.Usage = usage
 	flag.Parse()
 
@@ -53,6 +57,7 @@ func fromFlags(flags cmdFlags) []svg.Option {
 		o = append(o, svg.Exclude(c))
 	}
 
+	o = append(o, svg.Strategy(strategy.PixelForPixel))
 	return o
 }
 
@@ -62,8 +67,7 @@ func exit(args ...interface{}) {
 }
 
 func usage() {
-	fmt.Printf("Usage: %s [-debug] [-keepInvisible] [-exclude=#RRGGBB[AA]] FILE",
+	fmt.Println("Usage: %s [-debug] [-keepInvisible] [-exclude=#RRGGBB[AA]] [-optimize=pixels] FILE",
 		os.Args[0])
-	fmt.Println("\nOptions:")
 	flag.PrintDefaults()
 }
