@@ -11,11 +11,7 @@ func Pixel(x int, y int, c color.RGBA) Interface {
 
 type pixel struct {
 	x, y int
-	c color.RGBA
-}
-
-func (p pixel) Invisible() bool {
-	return p.c.A == 0
+	c    color.RGBA
 }
 
 func (p pixel) RGBA() color.RGBA {

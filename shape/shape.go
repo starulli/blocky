@@ -10,7 +10,6 @@ import (
 // Interface exposes the only useful shape functionality.
 type Interface interface {
 	fmt.Stringer
-	Invisible() bool
 	RGBA() color.RGBA
 }
 

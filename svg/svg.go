@@ -60,8 +60,19 @@ type svg struct {
 }
 
 func (s svg) String() string {
-	var b strings.Builder
+	if !s.keepInvisible {
+		s.g.EraseMatching(func(c color.RGBA) bool {
+			return c.A == 0x00
+		})
+	}
 
+	if s.exclude != nil {
+		s.g.EraseMatching(func(c color.RGBA) bool {
+			return *s.exclude == c
+		})
+	}
+
+	var b strings.Builder
 	width, height := s.g.Bounds()
 	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">`,
 		width, height)
@@ -73,9 +84,6 @@ func (s svg) String() string {
 
 	fmt.Fprintln(&b)
 	for _, sh := range s.strategy(s.g) {
-		if !s.keepInvisible && sh.Invisible() || s.exclude != nil && *s.exclude == sh.RGBA() {
-			continue
-		}
 		fmt.Fprintln(&b, sh)
 	}
 

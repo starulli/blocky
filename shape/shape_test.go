@@ -6,10 +6,10 @@ import (
 )
 
 func TestParseHex(t *testing.T) {
-	cases := []struct{
-		in string
+	cases := []struct {
+		in   string
 		want color.RGBA
-		err error
+		err  error
 	}{
 		{"#000000", color.RGBA{0, 0, 0, 0xff}, nil},
 		{"#000000af", color.RGBA{0, 0, 0, 0xaf}, nil},
@@ -32,8 +32,8 @@ func TestParseHex(t *testing.T) {
 }
 
 func TestHex(t *testing.T) {
-	cases := []struct{
-		in color.Color
+	cases := []struct {
+		in   color.Color
 		want string
 	}{
 		{color.NRGBA{}, "#000000"},
@@ -49,8 +49,8 @@ func TestHex(t *testing.T) {
 }
 
 func TestOpacity(t *testing.T) {
-	cases := []struct{
-		in color.Color
+	cases := []struct {
+		in   color.Color
 		want string
 	}{
 		{color.NRGBA{}, "0"},
