@@ -82,7 +82,6 @@ func (s svg) String() string {
 			"<style>rect { stroke-width: 0.01; stroke: #000 }</style>")
 	}
 
-	fmt.Fprintln(&b)
 	for _, sh := range s.strategy(s.g) {
 		fmt.Fprintln(&b, sh)
 	}
