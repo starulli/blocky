@@ -3,9 +3,9 @@
 package strategy
 
 import (
+	"github.com/tinychameleon/blocky/grid"
 	"github.com/tinychameleon/blocky/shape"
-	"image"
 )
 
 // Func is the type of any strategy algorithm.
-type Func func(image.Image) []shape.Interface
+type Func func(grid.Grid) []shape.Interface

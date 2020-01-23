@@ -46,3 +46,11 @@ func opacity(clr color.Color) string {
 	}
 	return v
 }
+
+func opacityAttr(c color.Color) string {
+	o := opacity(c)
+	if o != "1" {
+		return fmt.Sprintf(` fill-opacity="%s"`, o)
+	}
+	return ""
+}

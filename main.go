@@ -57,7 +57,7 @@ func fromFlags(flags cmdFlags) []svg.Option {
 		o = append(o, svg.Exclude(c))
 	}
 
-	o = append(o, svg.Strategy(strategy.PixelForPixel))
+	o = append(o, svg.Strategy(strategy.Pixels))
 	return o
 }
 

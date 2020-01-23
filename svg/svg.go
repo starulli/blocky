@@ -4,6 +4,7 @@ package svg
 
 import (
 	"fmt"
+	"github.com/tinychameleon/blocky/grid"
 	"github.com/tinychameleon/blocky/strategy"
 	"image"
 	"image/color"
@@ -28,7 +29,7 @@ func New(srcFilePath string, options ...Option) (Interface, error) {
 		return nil, svgError(err)
 	}
 
-	s := svg{m: m}
+	s := svg{g: grid.New(m)}
 	for _, opt := range options {
 		opt(&s)
 	}
@@ -51,7 +52,7 @@ type Interface interface {
 }
 
 type svg struct {
-	m             image.Image
+	g             grid.Grid
 	debug         bool
 	keepInvisible bool
 	exclude       *color.RGBA
@@ -61,9 +62,9 @@ type svg struct {
 func (s svg) String() string {
 	var b strings.Builder
 
-	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" `)
-	fmt.Fprintf(&b, `viewBox="0 0 %d %d">`,
-		s.m.Bounds().Max.X, s.m.Bounds().Max.Y)
+	width, height := s.g.Bounds()
+	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">`,
+		width, height)
 
 	if s.debug {
 		fmt.Fprintln(&b,
@@ -71,7 +72,7 @@ func (s svg) String() string {
 	}
 
 	fmt.Fprintln(&b)
-	for _, sh := range s.strategy(s.m) {
+	for _, sh := range s.strategy(s.g) {
 		if !s.keepInvisible && sh.Invisible() || s.exclude != nil && *s.exclude == sh.RGBA() {
 			continue
 		}

@@ -1,9 +1,9 @@
 package svg
 
 import (
+	"github.com/tinychameleon/blocky/grid"
 	"github.com/tinychameleon/blocky/shape"
 	"github.com/tinychameleon/blocky/testdata"
-	"image"
 	"image/color"
 	"strings"
 	"testing"
@@ -29,14 +29,15 @@ func TestLoadImage(t *testing.T) {
 
 func TestSvgStringerOutput(t *testing.T) {
 	m, _ := loadImage(testdata.ImageReader())
-	s := svg{m: m, debug: false, keepInvisible: false, strategy: fakeStrategy}
+	g := grid.New(m)
+	s := svg{g: g, debug: false, keepInvisible: false, strategy: fakeStrategy}
 	got := s.String()
 	if got != svgOutput {
 		t.Errorf("Got %v, want %v", got, svgOutput)
 	}
 }
 
-func fakeStrategy(m image.Image) []shape.Interface {
+func fakeStrategy(g grid.Grid) []shape.Interface {
 	return []shape.Interface{shape.Pixel(1, 2, color.RGBA{1, 2, 3, 255})}
 }
 
